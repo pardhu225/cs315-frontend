@@ -1,0 +1,26 @@
+nav {
+    height: 10vh;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    height: 100%;
+}
+
+ul li {
+    padding: 0 2em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-family: 'Google Sans', sans-serif;
+    height: 100%;
+    cursor: pointer;
+}
+
+.sign-out {
+    background: #ff6347;
+    color: ghostwhite;
+}

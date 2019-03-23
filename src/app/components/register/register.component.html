@@ -1,4 +1,4 @@
-<mat-card *ngIf="step===0" class="mat-elevation-z3">
+<mat-card *ngIf="step===0" class="mat-elevation-z3" style="margin-top: 10vh;">
   <h1>Registration: Step 1 of 2</h1>
   <h2>You are a?</h2>
   <div class="usertypes">
@@ -13,7 +13,7 @@
   </div>
 </mat-card>
 
-<mat-card *ngIf="usertype==='student' || usertype==='faculty'" class="mat-elevation-z3">
+<mat-card *ngIf="usertype==='student' || usertype==='faculty'" class="mat-elevation-z3" style="margin-top: 10vh; width: 40%">
   <h1>Registration: Step 2 of 2</h1>
   <h3>FIll the following form</h3>
   <div class="ffield">

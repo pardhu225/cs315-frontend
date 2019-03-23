@@ -1,3 +1,16 @@
-<p>
-  dashboard works!
-</p>
+<div class="not-verified" *ngIf="(uss.emailVerified | async)==='false'">
+  <mat-card>
+    <h3>Your email is not verified</h3>
+    <h5>Check back in when the verification is complete</h5>
+    <img src="assets/images/coffee.gif" alt="">
+    <div (click)="resendEmail()">
+      <span style="cursor: pointer;">
+        Resend verification email
+      </span>
+    </div>
+  </mat-card>
+</div>
+
+<div class="wrapper" *ngIf="(uss.emailVerified | async)==='true'">
+  Welcome bro
+</div>
