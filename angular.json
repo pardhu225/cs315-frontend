@@ -28,6 +28,7 @@
               "node_modules/izitoast/dist/css/iziToast.min.css"
             ],
             "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/izitoast/dist/js/iziToast.min.js"
             ]
           },

@@ -1,3 +1,38 @@
-<p>
-  login works!
-</p>
+<div class="wrapper">
+  <div class="left">
+    <mat-card class="mat-elevation-z3">
+        <h1>Welcome, login here</h1>
+        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="params?.status === 'mail-sent'">
+          Verification mail is sent to your email. Open the link before you may proceed.
+        </div>
+        <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="err">
+          {{ err }}
+        </div>
+        <div class="ffield">
+          <mat-form-field>
+            <input matInput placeholder="CC Username" [(ngModel)]="username">
+          </mat-form-field>
+          <span style="color:gray; border-radius: 2px; padding: 0.1em; font-size: 0.8em">@iitk.ac.in</span>
+        </div>
+        <div class="ffield">
+          <mat-form-field>
+            <input matInput placeholder="Password" type="password" [(ngModel)]="password">
+          </mat-form-field>
+        </div>
+        <div class="ffield">
+          <button mat-raised-button (click)="login()">Login</button>
+        </div>
+        <div class="ffield register">
+          Don't have an account? Register <span class="link" routerLink="/register">here</span>
+        </div>
+    </mat-card>
+  </div>
+  <div class="right">
+    <h1>A CS315 Project By</h1>
+    <h4>Pardhu Chowdary (160476)</h4>
+    <h4>Pranjal Pratik Lal (160496)</h4>
+    <h4>Mohammed Asad Karim (160405)</h4>
+    <h4>Prashant Kardam (160499)</h4>
+    <h4>Yash Jain (160821)</h4>
+  </div>
+</div>

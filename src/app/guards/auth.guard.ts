@@ -9,8 +9,7 @@ export class AuthGuard implements CanActivate {
     return new Promise((resolve, reject) => {
       this.uss.loggedIn.subscribe(res => {
         if (res === 'true') {
-          console.log('[auth-guard] Resolved to false');
-          this.router.navigate(['dashboard']);
+          console.log('[auth-guard] Resolved to true');
           resolve(true);
         } else if (res === 'false') {
           console.log('[auth-guard] Resolved to false');

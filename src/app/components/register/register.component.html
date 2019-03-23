@@ -1,0 +1,42 @@
+<mat-card *ngIf="step===0" class="mat-elevation-z3">
+  <h1>Registration: Step 1 of 2</h1>
+  <h2>You are a?</h2>
+  <div class="usertypes">
+    <div class="usertype mat-elevation-z1" (click)="selectType('student')">
+      <img src="assets/images/student.svg" alt="">
+      <div>Student</div>
+    </div>
+    <div class="usertype mat-elevation-z1" (click)="selectType('faculty')">
+      <img src="assets/images/professor.svg" alt="">
+      <div>Faculty</div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="usertype==='student' || usertype==='faculty'" class="mat-elevation-z3">
+  <h1>Registration: Step 2 of 2</h1>
+  <h3>FIll the following form</h3>
+  <div class="ffield">
+    <mat-form-field>
+      <input matInput placeholder="CC Username" [(ngModel)]="username" maxlength="8" matTooltip="Max 8 characters"
+        matTooltipPosition="right">
+    </mat-form-field>
+    <span style="color:gray; border-radius: 2px; padding: 0.1em; font-size: 0.8em">@iitk.ac.in</span>
+  </div>
+  <div class="ffield">
+    <mat-form-field>
+      <input matInput placeholder="Password" type="password" [(ngModel)]="password" matTooltip="Min 8 characters"
+        matTooltipPosition="right">
+    </mat-form-field>
+  </div>
+  <div class="ffield">
+    <mat-form-field>
+      <input matInput placeholder="Password again" type="password" [(ngModel)]="passwordAgain">
+    </mat-form-field>
+  </div>
+  <div class="ffield">
+    <button mat-raised-button [disabled]="!username || !password || password.length<8 || password!==passwordAgain"
+            (click)="createAccount()">
+      Create my Account!</button>
+  </div>
+</mat-card>

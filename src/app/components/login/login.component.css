@@ -1,0 +1,43 @@
+.wrapper {
+    display: flex;
+    min-height: 80vh;
+}
+
+.left,.right {
+    padding: 2em;
+}
+
+.left {
+    width: 40%;
+}
+.right {
+    width: 60%;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2,h3,h4,h5 {
+    font-family: 'Open Sans', 'Lato', 'Helvetica', sans-serif !important;
+}
+
+h1 {
+    font-family: 'Google Sans', sans-serif;
+}
+.ffield {
+    padding-left: 3em;
+}
+
+.register {
+    font-size: 0.9em;
+}
+.link {
+    cursor: pointer;
+    color: gray;
+    text-decoration: underline;
+}
+
+.alert {
+    font-size: 0.85em;
+}

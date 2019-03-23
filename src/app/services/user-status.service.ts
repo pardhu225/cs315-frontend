@@ -14,12 +14,15 @@ export class UserStatusService {
   fetchingDataFromDB = new BehaviorSubject<boolean>(false);
   lastRefreshed: number = null;
   refreshIntervalId: any;
+  emailVerified = new BehaviorSubject<'true' | 'false' | 'null'>('null');
 
   constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router) {
     this.auth.authState.subscribe(u => {
       if (u) {
         this.refreshUser();
+        this.emailVerified.next(u.emailVerified ? 'true' : 'false');
         this.refreshIntervalId = setInterval(() => this.refreshUser(), 600 * 1000);
+        this.loggedIn.next('true');
       } else {
         if (this.refreshIntervalId) {
           clearInterval(this.refreshIntervalId);
@@ -73,11 +76,9 @@ export class UserStatusService {
           const j = <any>res;
           j.firebase = usr.firebase;
           this.user.next(j);
-          this.loggedIn.next('true');
           this.fetchingDataFromDB.next(false);
         })
         .catch(err => {
-          this.loggedIn.next('false');
           this.user.next(null);
           this.fetchingDataFromDB.next(false);
         });
