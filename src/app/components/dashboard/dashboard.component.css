@@ -19,3 +19,36 @@
     width: 300px;
     margin: auto;
 }
+
+.wrapper {
+    display: flex;
+    padding: 1.2em;
+    background: #fbfbfb;
+}
+
+.wrapper .left {
+    width: 48%;
+    margin-right: 2%;
+}
+.wrapper .right {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.no-course {
+    font-size: 0.9em;
+    color: gray;
+    text-align: center;
+}
+
+mat-card {
+    margin-bottom: 1.2em;
+}
+
+h3 {
+    font-family: 'Google Sans', 'Open Sans', sans-serif;
+}
+
+h3 i {
+    font-size: 0.9em;
+}

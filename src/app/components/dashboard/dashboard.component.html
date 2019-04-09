@@ -3,14 +3,77 @@
     <h3>Your email is not verified</h3>
     <h5>Check back in when the verification is complete</h5>
     <img src="assets/images/coffee.gif" alt="">
-    <div (click)="resendEmail()">
-      <span style="cursor: pointer;">
-        Resend verification email
-      </span>
-    </div>
+    <button mat-raised-button (click)="resendEmail()" style="background: #1effd2">
+      Resend verification email
+    </button>
   </mat-card>
 </div>
 
-<div class="wrapper" *ngIf="(uss.emailVerified | async)==='true'">
-  Welcome bro
+<div class="wrapper student-wrapper" *ngIf="(uss.emailVerified | async)==='true' && (uss.usertype | async)==='student'">
+  <div class="left">
+    <mat-card>
+      <h3><i class="fas fa-flask"></i> Your Courses</h3>
+      <div class="courses">
+        <div class="course" *ngFor="let course of (uss.coursesThisSem | async)">
+          <h3>{{ course.title }}</h3>
+        </div>
+        <div class="no-course" *ngIf="(uss.coursesThisSem | async).length === 0">
+          You have registered for no courses this semester.
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="right">
+    <mat-card>
+      <h3><i class="fas fa-glasses"></i> Profile Management</h3>
+      <div>
+        <button mat-raised-button>View/Edit your information</button>
+        <button mat-raised-button>View timetable</button>
+        <button mat-raised-button>View all your courses</button>
+      </div>
+    </mat-card>
+
+    <mat-card>
+      <h3><i class="fas fa-info-circle"></i> Info Corner</h3>
+      <div>
+        <button mat-raised-button>Departmental Template</button>
+        <button mat-raised-button>Courses being offered this sem</button>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<div class="wrapper faculty-wrapper" *ngIf="(uss.emailVerified | async)==='true' && (uss.usertype | async)==='faculty'">
+  <div class="left">
+    <mat-card>
+      <h3><i class="fas fa-flask"></i> Your Courses</h3>
+      <button mat-raised-button routerLink="/faculty/manage-courses">Manage My Courses</button>
+      <div class="courses">
+        <div class="course" *ngFor="let course of (uss.coursesThisSem | async)">
+          <h3>{{ course.title }}</h3>
+        </div>
+        <div class="no-course" *ngIf="(uss.coursesThisSem | async).length === 0">
+          You have registered for no courses this semester.
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="right">
+    <mat-card>
+      <h3><i class="fas fa-glasses"></i> Profile Management</h3>
+      <div>
+        <button mat-raised-button>View/Edit your information</button>
+        <button mat-raised-button>View timetable</button>
+        <button mat-raised-button>View all your courses</button>
+      </div>
+    </mat-card>
+
+    <mat-card>
+      <h3><i class="fas fa-info-circle"></i> Info Corner</h3>
+      <div>
+        <button mat-raised-button>Departmental Template</button>
+        <button mat-raised-button>Courses being offered this sem</button>
+      </div>
+    </mat-card>
+  </div>
 </div>

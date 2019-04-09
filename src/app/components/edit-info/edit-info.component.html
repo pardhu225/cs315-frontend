@@ -1,0 +1,160 @@
+<div class="wrapper">
+  <h1 style="text-align: center;">Your Details</h1>
+  <div class="student-form" *ngIf="(uss.user | async)?.usertype == 'student'">
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['name']" placeholder="Your name" />
+        <mat-error *ngIf="formControls['name'].errors?.required">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <textarea matInput [formControl]="formControls['address']" placeholder="Your address of residence">
+        </textarea>
+        <mat-error *ngIf="formControls['address'].errors?.required">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-radio-group [formControl]="formControls['marital_status']">
+        <mat-radio-button value="single">Single</mat-radio-button>
+        <mat-radio-button value="married">Married</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date" [formControl]="formControls['date_of_birth']">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="formControls['date_of_birth'].errors?.required">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['mobile_1']" placeholder="Mobile number" />
+        <mat-error *ngIf="formControls['mobile_1'].errors?.required">
+          This field is required
+        </mat-error>
+        <mat-error *ngIf="formControls['mobile_1'].errors?.pattern">
+          Please enter a 10 digit phone number
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['mobile_2']" placeholder="Alternate mobile number" />
+        <mat-error *ngIf="formControls['mobile_2'].errors?.required">
+          This field is required
+        </mat-error>
+        <mat-error *ngIf="formControls['mobile_2'].errors?.pattern">
+          Please enter a 10 digit phone number
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['alternate_email']" placeholder="Alternate Email Address" />
+        <mat-error *ngIf="formControls['alternate_email'].errors?.required">
+          This field is required
+        </mat-error>
+        <mat-error *ngIf="formControls['mobile_2'].errors?.email">
+          This is not a valid email address
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['hostel']" placeholder="Hostel Name" />
+        <mat-error *ngIf="formControls['hostel'].errors?.required">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['room']" placeholder="Room Number" />
+        <mat-error *ngIf="formControls['room'].errors?.required">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['father_name']" placeholder="Father Name" />
+        <mat-error *ngIf="formControls['father_name'].errors?.required">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['mother_name']" placeholder="Mother Name" />
+        <mat-error *ngIf="formControls['mother_name'].errors?.required">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['father_mobile_1']" placeholder="Father's Phone number 1 (required)" />
+        <mat-error *ngIf="formControls['father_mobile_1'].errors?.required">
+          This field is required
+        </mat-error>
+        <mat-error *ngIf="formControls['father_mobile_1'].errors?.pattern">
+          Please enter 10 digit mobile number
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['mother_mobile_1']" placeholder="Mother's Phone number 1 (required)" />
+        <mat-error *ngIf="formControls['mother_mobile_1'].errors?.required">
+          This field is required
+        </mat-error>
+        <mat-error *ngIf="formControls['mother_mobile_1'].errors?.pattern">
+          Please enter 10 digit mobile number
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['father_mobile_2']" placeholder="Father's Phone number 2 (optional)" />
+        <mat-error *ngIf="formControls['father_mobile_2'].errors?.pattern">
+          Please enter 10 digit mobile number
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['mother_mobile_2']" placeholder="Mother's Phone number 2 (optional)" />
+        <mat-error *ngIf="formControls['mother_mobile_2'].errors?.pattern">
+          Please enter 10 digit mobile number
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['father_email']" placeholder="Father's email address (optional)" />
+        <mat-error *ngIf="formControls['father_email'].errors?.email">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <input matInput type="text" [formControl]="formControls['mother_email']" placeholder="Mother's email address (optional)" />
+        <mat-error *ngIf="formControls['mother_email'].errors?.email">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div style="text-align: center">
+    <button mat-raised-button (click)="update()" [disabled]="!(formGroup?.valid) || formGroup?.pristine">Update Info</button>
+  </div>
+</div>

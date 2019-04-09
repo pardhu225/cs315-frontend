@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import iziToast from 'izitoast';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   password;
   passwordAgain;
 
-  constructor(private auth: AngularFireAuth, private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -26,30 +27,59 @@ export class RegisterComponent implements OnInit {
   }
 
   createAccount() {
-    this.auth.auth.createUserWithEmailAndPassword(this.username + '@iitk.ac.in', this.password).then(res => {
-      res.user.sendEmailVerification().then(e => {
+    if (this.usertype === 'student') {
+      this.createStudentAccount();
+    }
+    if (this.usertype === 'faculty') {
+      this.createFacultyAccount();
+    }
+  }
+
+  createStudentAccount() {
+    this.http.post('/api/user/register/student', {
+      username: this.username,
+      password: this.password
+    }, {})
+      .toPromise()
+      .then(e => {
         iziToast.success({
           title: 'Success',
-          message: 'Account successfully created and email sent'
+          message: 'Account successfully created! You may login now.'
         });
-        this.router.navigate(['login'], { queryParams: {status: 'mail-sent'} });
-      }).catch(e => {
+        this.router.navigate(['login'], { queryParams: { status: 'account-created' } });
+      })
+      .catch(e => {
         console.log(e);
         iziToast.error({
           title: 'Error',
-          message: 'Account successfully created but mail was not sent',
+          message: e.error.message,
           overlay: true,
           position: 'center'
         });
       });
-    }).catch(e => {
-      console.log(e);
-      iziToast.error({
-        title: 'Error',
-        message: e.message,
-        overlay: true,
-        position: 'center'
+  }
+
+  createFacultyAccount() {
+    this.http.post('/api/user/register/faculty', {
+      username: this.username,
+      password: this.password
+    }, {})
+      .toPromise()
+      .then(e => {
+        iziToast.success({
+          title: 'Success',
+          message: 'Account successfully created! You may login now.'
+        });
+        this.router.navigate(['login'], { queryParams: { status: 'account-created' } });
+      })
+      .catch(e => {
+        console.log(e);
+        iziToast.error({
+          title: 'Error',
+          message: e.error.message,
+          overlay: true,
+          position: 'center'
+        });
       });
-    });
   }
 }

@@ -1,0 +1,13 @@
+.student-form {
+    font-size: 0.91em;
+    column-count: 2;
+    column-gap: 20px;
+    width: 80%;
+    margin: auto;
+    padding: 2em;
+    padding-top: 1em;
+}
+
+mat-form-field {
+    width: 100%;
+}

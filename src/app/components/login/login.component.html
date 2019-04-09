@@ -2,15 +2,15 @@
   <div class="left">
     <mat-card class="mat-elevation-z3">
         <h1>Welcome, login here</h1>
-        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="params?.status === 'mail-sent'">
-          Verification mail is sent to your email. Open the link before you may proceed.
+        <div class="alert alert-success alert-dismissible" role="alert" *ngIf="params?.status === 'account-created'">
+          Your account has been created. You may login now.
         </div>
         <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="err">
           {{ err }}
         </div>
         <div class="ffield">
           <mat-form-field>
-            <input matInput placeholder="CC Username" [(ngModel)]="username">
+            <input matInput placeholder="CC Username" [(ngModel)]="username" autofocus>
           </mat-form-field>
           <span style="color:gray; border-radius: 2px; padding: 0.1em; font-size: 0.8em">@iitk.ac.in</span>
         </div>

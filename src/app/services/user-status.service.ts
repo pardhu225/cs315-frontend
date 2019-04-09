@@ -15,6 +15,22 @@ export class UserStatusService {
   lastRefreshed: number = null;
   refreshIntervalId: any;
   emailVerified = new BehaviorSubject<'true' | 'false' | 'null'>('null');
+  coursesThisSem = new BehaviorSubject([]);
+  userType: null | 'student' | 'faculty' = null;
+  userProps = [
+    'name',
+    'address',
+    'marital_status',
+    'date_of_birth',
+    'mobile_1',
+    'alternate_email',
+    'hostel',
+    'room',
+    'father_name',
+    'mother_name',
+    'father_mobile_1',
+    'mother_mobile_1',
+  ];
 
   constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router) {
     this.auth.authState.subscribe(u => {
@@ -29,6 +45,7 @@ export class UserStatusService {
           this.refreshIntervalId = null;
         }
         this.loggedIn.next('false');
+        this.emailVerified.next('null');
         this.user.next(null);
         this.fetchingDataFromDB.next(false);
       }
@@ -36,8 +53,10 @@ export class UserStatusService {
   }
 
   public updateUser(obj): Promise<any> {
-    const url = `/api/user/update`;
-
+    let url = `/api/student/update`;
+    if (this.user.getValue() && this.user.getValue().userType === 'faculty') {
+      url = '/api/faculty/update';
+    }
     return this.auth.auth.currentUser.getIdToken().then(tok => {
       let headers = new HttpHeaders();
       headers = headers.append('Authorization', tok);
@@ -67,19 +86,35 @@ export class UserStatusService {
     return this.auth.auth.currentUser.getIdToken()
         .then(token => {
           usr.firebase.idToken = token;
-          const headers = new HttpHeaders().append('Authorization', token);
           this.fetchingDataFromDB.next(true);
-          return this.http.get('/api/user/me', { headers: headers }).toPromise();
+          return this.http.post('/api/user/me', {}, { headers: { 'Authorization': token } }).toPromise();
         })
-        .then(res => {
-          this.lastRefreshed = new Date().getTime();
+        .then((res: any) => {
           const j = <any>res;
           j.firebase = usr.firebase;
+          let completed = true;
+          for ( let i = 0; i < this.userProps.length; i++) {
+            if (!j.userDetails[this.userProps[i]]) {
+              completed = false;
+              console.log(this.userProps[i], 'not completeed');
+            }
+          }
+          j.completed = completed;
+          this.coursesThisSem.next(res.courses);
           this.user.next(j);
           this.fetchingDataFromDB.next(false);
+          if (this.emailVerified.getValue() === 'true' && !completed) {
+            this.router.navigate(['/edit-info']);
+            iziToast.info({
+              title: 'Please fill your details before you may continue',
+              position: 'center',
+              overlay: true
+            });
+          }
         })
         .catch(err => {
           this.user.next(null);
+          this.coursesThisSem.next([]);
           this.fetchingDataFromDB.next(false);
         });
   }

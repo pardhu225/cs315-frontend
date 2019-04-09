@@ -17,10 +17,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatButtonModule } from '@angular/material';
+import { MatFormFieldModule, MatButtonModule, MatNativeDateModule } from '@angular/material';
 import { RegisterComponent } from './components/register/register.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
+import { EditInfoComponent } from './components/edit-info/edit-info.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VerifiedUsersGuard } from './guards/verfied-users.guard';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule, MatDatepicker } from '@angular/material/datepicker';
+import { FacCourseManagementComponent } from './components/faculty/fac-course-management/fac-course-management.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { LoadingComponent } from './components/misc/loading/loading.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { FacultyOnlyGuard } from './guards/faculty-only.guard';
+import { LoadingController } from './services/loading.controller';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -39,7 +52,10 @@ const firebaseConfig = {
     PageNotFoundComponent,
     NavbarComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    EditInfoComponent,
+    FacCourseManagementComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -52,12 +68,23 @@ const firebaseConfig = {
     FormsModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatIconModule,
+    MatTreeModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthGuard,
     UserStatusService,
-    AngularFireAuth
+    AngularFireAuth,
+    VerifiedUsersGuard,
+    FacultyOnlyGuard,
+    LoadingController
   ],
   bootstrap: [AppComponent]
 })

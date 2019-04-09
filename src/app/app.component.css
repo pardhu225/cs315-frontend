@@ -1,0 +1,44 @@
+app-navbar {
+  z-index: 100;
+  position: relative;
+}
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.wrapper {
+    display: flex;
+    height: 90vh;
+    overflow: auto;
+}
+
+.global-nav {
+    padding: 1em 0;
+    flex-basis: 20%;
+    height: 100%;
+}
+
+.router-outlet {
+    flex-grow: 1;
+    flex-basis: 0;
+    height: 100%;
+    overflow: auto;
+}
+
+.global-nav {
+    background: #323232;
+}
+mat-tree {
+    background: #323232;
+}
+mat-tree * {
+    color: ghostwhite !important;
+    font-size: 16px;
+}
