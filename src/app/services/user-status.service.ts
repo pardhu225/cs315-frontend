@@ -17,7 +17,7 @@ export class UserStatusService {
   emailVerified = new BehaviorSubject<'true' | 'false' | 'null'>('null');
   coursesThisSem = new BehaviorSubject([]);
   userType: null | 'student' | 'faculty' = null;
-  userProps = [
+  studentProps = [
     'name',
     'address',
     'marital_status',
@@ -31,6 +31,15 @@ export class UserStatusService {
     'father_mobile_1',
     'mother_mobile_1',
   ];
+  facultyProps = [
+    'name',
+    'address',
+    'phone',
+    'email',
+    'address'
+  ];
+  userProps = [];
+  idToken = null;
 
   constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router) {
     this.auth.authState.subscribe(u => {
@@ -46,10 +55,12 @@ export class UserStatusService {
         }
         this.loggedIn.next('false');
         this.emailVerified.next('null');
+        console.log('here what')
         this.user.next(null);
         this.fetchingDataFromDB.next(false);
       }
     });
+    this.user.subscribe(r => console.log(r));
   }
 
   public updateUser(obj): Promise<any> {
@@ -59,13 +70,14 @@ export class UserStatusService {
     }
     return this.auth.auth.currentUser.getIdToken().then(tok => {
       let headers = new HttpHeaders();
+      console.log(tok);
       headers = headers.append('Authorization', tok);
       return this.http.put(url, obj, { headers })
-        .toPromise()
-        .then(() => this.refreshUser())
+      .toPromise()
+      .then(() => this.refreshUser())
         .catch(err => Promise.reject(err));
-    });
-  }
+      });
+    }
 
   public logout() {
     this.auth.auth.signOut().then(() => {
@@ -82,40 +94,81 @@ export class UserStatusService {
     if (!this.auth.auth.currentUser) {
       throw new Error('No user found to refresh');
     }
-    const usr = <any>{firebase: this.auth.auth.currentUser};
+    const usr = <any>{ firebase: this.auth.auth.currentUser };
     return this.auth.auth.currentUser.getIdToken()
-        .then(token => {
-          usr.firebase.idToken = token;
-          this.fetchingDataFromDB.next(true);
-          return this.http.post('/api/user/me', {}, { headers: { 'Authorization': token } }).toPromise();
-        })
-        .then((res: any) => {
-          const j = <any>res;
-          j.firebase = usr.firebase;
-          let completed = true;
-          for ( let i = 0; i < this.userProps.length; i++) {
-            if (!j.userDetails[this.userProps[i]]) {
-              completed = false;
-              console.log(this.userProps[i], 'not completeed');
-            }
+    .then(token => {
+      usr.firebase.idToken = token;
+        this.fetchingDataFromDB.next(true);
+        console.log(token);
+        this.idToken = token;
+        return this.http.post('/api/user/me', {}, { headers: { 'Authorization': token } }).toPromise();
+      })
+      .then((res: any) => {
+        console.log(res);
+        const j = <any>res;
+        j.firebase = usr.firebase;
+        let completed = true;
+        this.userProps =  j.usertype === 'faculty' ? this.facultyProps : this.studentProps;
+        for (let i = 0; i < this.userProps.length; i++) {
+          if (!j.userDetails[this.userProps[i]]) {
+            completed = false;
+            console.log(this.userProps[i], 'not completeed');
           }
-          j.completed = completed;
-          this.coursesThisSem.next(res.courses);
-          this.user.next(j);
-          this.fetchingDataFromDB.next(false);
-          if (this.emailVerified.getValue() === 'true' && !completed) {
-            this.router.navigate(['/edit-info']);
-            iziToast.info({
-              title: 'Please fill your details before you may continue',
-              position: 'center',
-              overlay: true
-            });
-          }
-        })
-        .catch(err => {
-          this.user.next(null);
-          this.coursesThisSem.next([]);
-          this.fetchingDataFromDB.next(false);
-        });
+        }
+        j.completed = completed;
+        this.coursesThisSem.next(res.courses);
+        console.log(j);
+        this.user.next(j);
+        this.fetchingDataFromDB.next(false);
+        console.log(this.user.getValue().firebase.uid);
+        if (this.emailVerified.getValue() === 'true' && !completed) {
+          this.router.navigate(['/edit-info']);
+          iziToast.info({
+            title: 'Please fill your details before you may continue',
+            position: 'center',
+            overlay: true
+          });
+        }
+        return this.fetchOtherDetails();
+      })
+      .then(results => {
+        if (this.user.getValue().usertype === 'student') {
+          this.coursesThisSem.next(results[0]);
+          console.log('Extra details are:', results[0]);
+        } else if (this.user.getValue().usertype === '') {
+          this.coursesThisSem.next(results[0]);
+          console.log('Extra details are:', results[0]);
+        }
+      })
+      .catch(err => {
+        console.warn(err);
+        this.user.next(null);
+        this.coursesThisSem.next([]);
+        this.fetchingDataFromDB.next(false);
+      });
+  }
+
+  /**
+   * @returns = [
+   *    0: The courses taken by the current student in this semester
+   *    1:
+   * ]
+   */
+  fetchOtherDetails() {
+    const u = this.user.getValue();
+    if (!u) {
+      return;
+    }
+    if (u.usertype === 'student') {
+      const promises: Promise<any>[] = [
+        this.http.get('/api/student/courses-this-sem', { headers: { 'Authorization': this.idToken } }).toPromise()
+      ];
+      return Promise.all(promises);
+    } else {
+      const promises: Promise<any>[] = [
+        this.http.get('/api/faculty/courses-this-sem', { headers: { 'Authorization': this.idToken } }).toPromise()
+      ];
+      return Promise.all(promises);
+    }
   }
 }

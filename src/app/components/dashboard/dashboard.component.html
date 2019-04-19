@@ -9,13 +9,14 @@
   </mat-card>
 </div>
 
-<div class="wrapper student-wrapper" *ngIf="(uss.emailVerified | async)==='true' && (uss.usertype | async)==='student'">
+<div class="wrapper student-wrapper" *ngIf="(uss.emailVerified | async)==='true' && (uss.user | async)?.usertype ==='student'">
   <div class="left">
     <mat-card>
-      <h3><i class="fas fa-flask"></i> Your Courses</h3>
+      <h3><i class="fas fa-flask"></i> Your Courses <button style="float:right; background: #1effd2" mat-raised-button routerLink="/add-drop">ADD-DROP</button></h3>
       <div class="courses">
-        <div class="course" *ngFor="let course of (uss.coursesThisSem | async)">
-          <h3>{{ course.title }}</h3>
+        <div class="course mat-elevation-z1" *ngFor="let course of (uss.coursesThisSem | async)">
+          <div>{{ course.title }} - {{ course.code }} ({{course.status}})</div>
+          <p></p>
         </div>
         <div class="no-course" *ngIf="(uss.coursesThisSem | async).length === 0">
           You have registered for no courses this semester.
@@ -27,7 +28,7 @@
     <mat-card>
       <h3><i class="fas fa-glasses"></i> Profile Management</h3>
       <div>
-        <button mat-raised-button>View/Edit your information</button>
+        <button mat-raised-button routerLink="/edit-info">View/Edit your information</button>
         <button mat-raised-button>View timetable</button>
         <button mat-raised-button>View all your courses</button>
       </div>
@@ -43,7 +44,7 @@
   </div>
 </div>
 
-<div class="wrapper faculty-wrapper" *ngIf="(uss.emailVerified | async)==='true' && (uss.usertype | async)==='faculty'">
+<div class="wrapper faculty-wrapper" *ngIf="(uss.emailVerified | async)==='true' && (uss.user | async)?.usertype ==='faculty'">
   <div class="left">
     <mat-card>
       <h3><i class="fas fa-flask"></i> Your Courses</h3>

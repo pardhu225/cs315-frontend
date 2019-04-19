@@ -11,3 +11,8 @@
 mat-form-field {
     width: 100%;
 }
+
+.faculty-form {
+    width: 50%;
+    margin: auto;
+}

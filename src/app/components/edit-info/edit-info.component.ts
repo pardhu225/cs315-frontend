@@ -83,6 +83,10 @@ export class EditInfoComponent implements OnInit {
       name: 'mother_email',
       validators: [Validators.email]
     },
+    {
+      name: 'Income',
+      validators: [Validators.required]
+    },
   ];
   facultyProps = [
     {
@@ -90,23 +94,19 @@ export class EditInfoComponent implements OnInit {
       validators: [Validators.required]
     },
     {
-      name: 'office_address',
+      name: 'address',
       validators: [Validators.required]
     },
     {
-      name: 'mobile_1',
+      name: 'phone',
       validators: [Validators.required, Validators.pattern(new RegExp(/^\d{10}$/))]
     },
     {
-      name: 'mobile_2',
-      validators: [Validators.pattern(new RegExp(/^\d{10}$/))]
-    },
-    {
-      name: 'alternate_email',
+      name: 'email',
       validators: [Validators.required, Validators.email]
     },
     {
-      name: 'residence_address',
+      name: 'address',
       validators: [Validators.required]
     }
   ];
@@ -149,6 +149,23 @@ export class EditInfoComponent implements OnInit {
     const u = <any>{};
     console.log(this.uss.user.getValue());
     if (this.uss.user.getValue() && this.uss.user.getValue().usertype === 'student') {
+      this.userProps.forEach(prop => u[prop.name] = this.formControls[prop.name].value);
+      this.uss.updateUser(u)
+      .then(r => {
+        iziToast.success({
+          title: 'Success',
+          message: 'Your details have been updated'
+        });
+      })
+      .catch(e => {
+        console.log(e);
+        iziToast.error({
+          title: 'Error',
+          message: 'Details not updated due to some error'
+        });
+      });
+    } else
+    if (this.uss.user.getValue() && this.uss.user.getValue().usertype === 'faculty') {
       this.userProps.forEach(prop => u[prop.name] = this.formControls[prop.name].value);
       this.uss.updateUser(u)
       .then(r => {

@@ -8,6 +8,7 @@ import { EditInfoComponent } from './components/edit-info/edit-info.component';
 import { VerifiedUsersGuard } from './guards/verfied-users.guard';
 import { FacCourseManagementComponent } from './components/faculty/fac-course-management/fac-course-management.component';
 import { FacultyOnlyGuard } from './guards/faculty-only.guard';
+import { AddDropComponent } from './components/add-drop/add-drop.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, canActivate: [AuthGuard] },
@@ -17,6 +18,7 @@ export const routes: Routes = [
     { path: 'edit-info', component: EditInfoComponent, canActivate: [AuthGuard, VerifiedUsersGuard] },
 
     { path: 'faculty/manage-courses', component: FacCourseManagementComponent, canActivate: [AuthGuard, FacultyOnlyGuard]  },
+    { path: 'add-drop', component: AddDropComponent, canActivate: [AuthGuard]  },
 
     { path: '**', component: PageNotFoundComponent }
 ];

@@ -1,0 +1,39 @@
+<div class="wrapper">
+  <mat-card>
+    <h3>Course add drop</h3>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Select a course to apply for</mat-label>
+        <mat-select [(ngModel)]="course">
+          <mat-option *ngFor="let course of (thisSemCourses | async)" [value]="course.offering_id">
+            {{course.title}} ({{course.coursecode}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Course nature</mat-label>
+        <mat-select [(ngModel)]="course_nature">
+          <mat-option value="fresh">Fresh</mat-option>
+          <mat-option value="substitute">Substitute</mat-option>
+          <mat-option value="repeat">Repeat</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Taking the course as</mat-label>
+        <mat-select [(ngModel)]="taken_as">
+          <mat-option value="OE">OE</mat-option>
+          <mat-option value="DE">DE</mat-option>
+          <mat-option value="DC">DC</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Remarks" [(ngModel)]="remarks"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button (click)="doRequest()">Place course request</button>
+    </div>
+  </mat-card>
+</div>

@@ -1,3 +1,44 @@
-<p>
-  fac-course-management works!
-</p>
+<div class="wrapper">
+  <mat-card class="create-offering">
+    <h3>Undertake Course offering</h3>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Course being offered</mat-label>
+        <mat-select [(ngModel)]="offeringBeingCreated">
+          <mat-option *ngFor="let course of courses" [value]="course.code">
+            {{course.title}} ({{course.code}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Offering the course as</mat-label>
+        <input type="text" matInput [(ngModel)]="offering_as">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea matInput placeholder="Remarks" [(ngModel)]="remark"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button (click)="createOffering()">Create new course offering</button>
+    </div>
+  </mat-card>
+
+  <mat-card class="register-as-tutor">
+    <h3>Register as tutor for another course</h3>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Course being offered</mat-label>
+        <mat-select [(ngModel)]="courseToBeTutor">
+          <mat-option *ngFor="let course of coursesThisSem" [value]="course.offering_id">
+            {{course.title}} ({{course.coursecode}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button (click)="registerAsTutor()">Register yourself now!</button>
+    </div>
+  </mat-card>
+</div>

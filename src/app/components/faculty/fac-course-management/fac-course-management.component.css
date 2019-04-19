@@ -1,0 +1,13 @@
+.create-offering {
+    width: 40%;
+    margin: 1.5em;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.register-as-tutor {
+    width: 50%;
+    margin: 1em;
+}

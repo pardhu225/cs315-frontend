@@ -34,6 +34,8 @@ import { LoadingComponent } from './components/misc/loading/loading.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { FacultyOnlyGuard } from './guards/faculty-only.guard';
 import { LoadingController } from './services/loading.controller';
+import { AddDropComponent } from './components/add-drop/add-drop.component';
+import {MatSelectModule} from '@angular/material/select';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -55,7 +57,8 @@ const firebaseConfig = {
     DashboardComponent,
     EditInfoComponent,
     FacCourseManagementComponent,
-    LoadingComponent
+    LoadingComponent,
+    AddDropComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ const firebaseConfig = {
     MatInputModule,
     FormsModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
@@ -86,6 +90,9 @@ const firebaseConfig = {
     FacultyOnlyGuard,
     LoadingController
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    LoadingComponent
+  ]
 })
 export class AppModule { }
