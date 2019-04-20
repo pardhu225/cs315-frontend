@@ -1,0 +1,13 @@
+.wrapper {
+    width: 40%;
+    margin: 5vh auto;
+}
+
+.complain-card {
+    padding: 2em;
+}
+
+.complaint {
+    border: 1px solid white;
+    padding: 1em;
+}

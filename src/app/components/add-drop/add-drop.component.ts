@@ -19,7 +19,10 @@ export class AddDropComponent implements OnInit {
 
   ngOnInit() {
     this.http.get('/api/student/all-courses-this-sem', {headers: {'Authorization': this.uss.idToken}}).toPromise()
-      .then(r => this.thisSemCourses.next(r));
+      .then(r => {
+        this.thisSemCourses.next(r);
+        console.log(r);
+      });
   }
 
   doRequest() {
@@ -39,6 +42,42 @@ export class AddDropComponent implements OnInit {
         iziToast.error({
           title: 'Failed!',
           message: 'Unable to request course'
+        });
+      });
+  }
+
+  requestWithdraw(c) {
+    this.http.post('/api/student/request-withdraw', {
+      offering_id: c
+    }, {headers: {'Authorization': this.uss.idToken}}).toPromise()
+      .then(r => {
+        iziToast.success({
+          title: 'Success',
+          message: 'Course has been withdrawn successfully'
+        });
+      }).catch(e => {
+        console.log(e);
+        iziToast.error({
+          title: 'Failed!',
+          message: 'Unable to request withdraw'
+        });
+      });
+  }
+
+  requestDrop(c) {
+    this.http.post('/api/student/course-dropped', {
+      offering_id: c
+    }, {headers: {'Authorization': this.uss.idToken}}).toPromise()
+      .then(r => {
+        iziToast.success({
+          title: 'Success',
+          message: 'Course has been withdrawn successfully'
+        });
+      }).catch(e => {
+        console.log(e);
+        iziToast.error({
+          title: 'Failed!',
+          message: 'Unable to request withdraw'
         });
       });
   }

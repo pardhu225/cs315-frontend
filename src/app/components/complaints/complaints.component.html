@@ -1,0 +1,43 @@
+<div class="wrapper">
+  <mat-card class="complain-card">
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Complaint title</mat-label>
+        <input matInput type="text" [(ngModel)]="complaintTitle">
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Your complaint goes here</mat-label>
+        <textarea matInput [(ngModel)]="complaint"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Complaint type</mat-label>
+        <mat-select [(ngModel)]="complaintType">
+          <mat-option value="domestic">Domestic</mat-option>
+          <mat-option value="carpentry">Carpentry</mat-option>
+          <mat-option value="sanitation">Sanitation</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="input-field">
+      <mat-form-field>
+        <mat-label>Location</mat-label>
+        <input matInput type="text" [(ngModel)]="location">
+      </mat-form-field>
+    </div>
+    <button mat-raised-button (click)="lodge()">Lodge complaint</button>
+  </mat-card>
+
+  
+  <mat-card class="complain-history" style="margin: 1em 0; padding: 1em;">
+    <h4>Complaint History</h4>
+    <div class="no-complaint" *ngIf="(history | async).length === 0">You have no history of complaints</div>
+    <div class="complaint" *ngFor="let c of (history | async)">
+      {{ c.complaint_title }} ({{ c.complaint_status }}) - {{ c.complaint_date | timeAgo }} <br>
+      <p style="font-size: 0.8em">{{ c.complaint }}</p>
+    </div>
+  </mat-card>
+</div>

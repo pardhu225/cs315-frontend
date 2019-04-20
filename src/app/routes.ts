@@ -9,6 +9,8 @@ import { VerifiedUsersGuard } from './guards/verfied-users.guard';
 import { FacCourseManagementComponent } from './components/faculty/fac-course-management/fac-course-management.component';
 import { FacultyOnlyGuard } from './guards/faculty-only.guard';
 import { AddDropComponent } from './components/add-drop/add-drop.component';
+import { ComplaintsComponent } from './components/complaints/complaints.component';
+import { RequestResponseComponent } from './components/request-response/request-response.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent, canActivate: [AuthGuard] },
@@ -17,7 +19,10 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]  },
     { path: 'edit-info', component: EditInfoComponent, canActivate: [AuthGuard, VerifiedUsersGuard] },
 
+    { path: 'complaints', component: ComplaintsComponent, canActivate: [AuthGuard, VerifiedUsersGuard] },
+
     { path: 'faculty/manage-courses', component: FacCourseManagementComponent, canActivate: [AuthGuard, FacultyOnlyGuard]  },
+    { path: 'faculty/respond-to-requests', component: RequestResponseComponent, canActivate: [AuthGuard, FacultyOnlyGuard]  },
     { path: 'add-drop', component: AddDropComponent, canActivate: [AuthGuard]  },
 
     { path: '**', component: PageNotFoundComponent }

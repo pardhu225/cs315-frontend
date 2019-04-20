@@ -1,3 +1,9 @@
 .wrapper {
     margin: 1em;
 }
+
+.course {
+    border: 1px solid gray;
+    padding: 1em;
+    margin: 0.5em;
+}

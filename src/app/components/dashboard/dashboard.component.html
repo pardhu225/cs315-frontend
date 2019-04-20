@@ -23,6 +23,19 @@
         </div>
       </div>
     </mat-card>
+
+    <mat-card>
+      <h3><i class="fas fa-dollar"></i> Your Dues</h3>
+      <div class="dues">
+        <div class="no-dues" style="background-color: greenyellow; color: green; text-align: center; padding: 0.7em">All clear</div>
+        <div class="due" *ngFor="let due of (uss.dues | async)">
+          <strong>Hall dues</strong>: {{ due.mess_dues + due.electricity_dues + due.other_dues }}
+          &nbsp;&nbsp;&nbsp;&nbsp; <strong>Mess Dues</strong>: {{ due.mess_dues }}
+          &nbsp;&nbsp;&nbsp;&nbsp; <strong>Electricity Dues</strong>: {{ due.electricity_dues }}
+          &nbsp;&nbsp;&nbsp;&nbsp; <strong>Other Dues</strong>: {{ due.other_dues }}
+        </div>
+      </div>
+    </mat-card>
   </div>
   <div class="right">
     <mat-card>
@@ -52,6 +65,7 @@
       <div class="courses">
         <div class="course" *ngFor="let course of (uss.coursesThisSem | async)">
           <h3>{{ course.title }}</h3>
+          <button mat-raised-button routerLink="/faculty/respond-to-requests">View requests</button>
         </div>
         <div class="no-course" *ngIf="(uss.coursesThisSem | async).length === 0">
           You have registered for no courses this semester.

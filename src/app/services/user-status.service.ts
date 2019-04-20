@@ -40,6 +40,11 @@ export class UserStatusService {
   ];
   userProps = [];
   idToken = null;
+  dues = new BehaviorSubject<any>([]);
+  currentStudents = new BehaviorSubject<any>([]);
+  waitingStudents = new BehaviorSubject<any>([]);
+  waitStats = <any>{};
+  acceptedStats = <any>{};
 
   constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router) {
     this.auth.authState.subscribe(u => {
@@ -55,7 +60,7 @@ export class UserStatusService {
         }
         this.loggedIn.next('false');
         this.emailVerified.next('null');
-        console.log('here what')
+        console.log('here what');
         this.user.next(null);
         this.fetchingDataFromDB.next(false);
       }
@@ -134,10 +139,14 @@ export class UserStatusService {
       .then(results => {
         if (this.user.getValue().usertype === 'student') {
           this.coursesThisSem.next(results[0]);
-          console.log('Extra details are:', results[0]);
-        } else if (this.user.getValue().usertype === '') {
+          this.dues.next(results[1]);
+          console.log('Extra details are:', results);
+        } else if (this.user.getValue().usertype === 'faculty') {
+          results[0].sort((a, b) => a.taking_as === 'Instructor Incharge' ? 1 : -1);
           this.coursesThisSem.next(results[0]);
-          console.log('Extra details are:', results[0]);
+          this.currentStudents.next(results[1]);
+          // this.waitingStudents.next(results[1].filter(e => e.status === 'waiting'));
+          console.log('Extra details are:', results);
         }
       })
       .catch(err => {
@@ -161,12 +170,14 @@ export class UserStatusService {
     }
     if (u.usertype === 'student') {
       const promises: Promise<any>[] = [
-        this.http.get('/api/student/courses-this-sem', { headers: { 'Authorization': this.idToken } }).toPromise()
+        this.http.get('/api/student/courses-this-sem', { headers: { 'Authorization': this.idToken } }).toPromise(),
+        this.http.post('/api/hall-dues', {}, {headers: {'Authorization': this.idToken}}).toPromise()
       ];
       return Promise.all(promises);
     } else {
       const promises: Promise<any>[] = [
-        this.http.get('/api/faculty/courses-this-sem', { headers: { 'Authorization': this.idToken } }).toPromise()
+        this.http.get('/api/faculty/courses-this-sem', { headers: { 'Authorization': this.idToken } }).toPromise(),
+        this.http.post('/api/faculty/current-students', {}, { headers: { 'Authorization': this.idToken } }).toPromise(),
       ];
       return Promise.all(promises);
     }

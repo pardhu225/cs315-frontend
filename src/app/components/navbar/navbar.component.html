@@ -5,8 +5,8 @@
     </li>
     <div style="flex-basis: 0; flex-grow: 1;pointer-events: none"></div>
     <li *ngIf="(uss.loggedIn | async) === 'true'">Acads</li>
-    <li *ngIf="(uss.loggedIn | async) === 'true'">Complaints</li>
-    <li *ngIf="(uss.loggedIn | async) === 'true'">Whatever</li>
+    <li *ngIf="(uss.loggedIn | async) === 'true'" routerLink="/complaints">Complaints</li>
+    <!-- <li *ngIf="(uss.loggedIn | async) === 'true'">Whatever</li> -->
     <li *ngIf="(uss.loggedIn | async) === 'true'" class="sign-out" (click)="uss.logout()">
       Sign out &nbsp; <span style="font-size: 1.5em" class="fas fa-sign-out-alt"></span>
     </li>

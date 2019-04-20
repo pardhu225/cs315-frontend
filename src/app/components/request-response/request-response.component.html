@@ -1,0 +1,32 @@
+<div class="wrapper">
+  <mat-card>
+    <h2>Respond to student requests</h2>
+    <div>
+      <mat-form-field>
+        <mat-label>Current Course</mat-label>
+        <mat-select [(ngModel)]="currentCourse">
+          <mat-option *ngFor="let course of (uss.coursesThisSem | async)" [value]="course.offering_id">
+            {{ course.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button (click)="showStudents()">Show students</button>
+    </div>
+    <div class="requests">
+      <div class="request" *ngFor="let stud of (currStuds | async)">
+        <h5>{{ stud.name }} ({{ stud.roll_no }})</h5>
+        <p>
+          CPI: {{ stud.CPI }} <br>
+          Department: {{ stud.department }}
+        </p>
+        <div class="buttons">
+          <button mat-raised-button (click)="acceptThis(stud.uid)" color="green">Accept</button>
+          <button mat-raised-button (click)="rejectThis(stud.uid)" color="danger">Reject</button>
+          <button mat-raised-button (click)="meetThis(stud.uid)" color="blue">Ask to meet</button>
+          <button mat-raised-button (click)="acceptDrop(stud.uid)" *ngIf="stud.status.includes('drop')" color="blue">Accept Drop</button>
+          <button mat-raised-button (click)="rejectDrop(stud.uid)" color="stud.status.includes('drop')">Reject Drop</button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

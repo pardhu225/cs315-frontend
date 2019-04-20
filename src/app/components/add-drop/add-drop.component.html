@@ -36,4 +36,14 @@
       <button mat-raised-button (click)="doRequest()">Place course request</button>
     </div>
   </mat-card>
+  <mat-card>
+    <h3>Current courses</h3>
+    <div class="courses">
+      <div class="course" *ngFor="let course of (uss.coursesThisSem | async)">
+        {{ course.title }} ({{course.status}}) <br>
+        <button mat-raised-button (click)="requestDrop(course.offering_id)" *ngIf="course.status==='accepted'">Drop</button>
+        <button mat-raised-button (click)="requestWithdraw(course.offering_id)" *ngIf="course.status==='waiting'">Withdraw</button>
+      </div>
+    </div>
+  </mat-card>
 </div>

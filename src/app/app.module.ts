@@ -36,6 +36,9 @@ import { FacultyOnlyGuard } from './guards/faculty-only.guard';
 import { LoadingController } from './services/loading.controller';
 import { AddDropComponent } from './components/add-drop/add-drop.component';
 import {MatSelectModule} from '@angular/material/select';
+import { ComplaintsComponent } from './components/complaints/complaints.component';
+import {TimeAgoPipe} from 'time-ago-pipe';
+import { RequestResponseComponent } from './components/request-response/request-response.component';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -58,7 +61,10 @@ const firebaseConfig = {
     EditInfoComponent,
     FacCourseManagementComponent,
     LoadingComponent,
-    AddDropComponent
+    AddDropComponent,
+    ComplaintsComponent,
+    TimeAgoPipe,
+    RequestResponseComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +86,7 @@ const firebaseConfig = {
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   providers: [
     AuthGuard,
